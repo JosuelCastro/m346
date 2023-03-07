@@ -1,0 +1,58 @@
+#cloud-config
+users: # Collection von Benutzern
+  - name: ubuntu # Der Benutzername des ersten Benutzers
+    sudo: ALL=(ALL) NOPASSWD:ALL # sudo-Regeln für diesen Benutzer
+    groups: users, admin # Gruppen definieren
+    home: /home/ubuntu # Ort von home bestimmen
+    shell: /bin/bash # Ort von shell bestimmen
+    lock_passwd: false # Passwort wird nicht gesperrt (Passwort regeln)
+    plain_text_passwd: 'password' # Passwort erstellen  
+ssh_pwauth: true # Authorisierung einstellen
+disable_root: false # Regel für Root bestimment
+packages: # Collection von Packages
+  - apache2 
+  - curl 
+  - wget 
+  - php 
+  - libapache2-mod-php 
+  - php-mysqli
+  - adminer
+
+runcmd:
+ - sudo a2enconf adminer 
+ - sudo systemctl restart apache2   
+
+
+ 
+write_files:
+  - content: |
+      <?php
+          //database
+          $servername = "192.168.64.6";
+          $username = "admin";
+          $password = "password";
+          $dbname = "mysql";
+          // Create connection
+          $conn = new mysqli($servername, $username, $password, $dbname);
+          // Check connection
+          if ($conn->connect_error) {
+                  die("Connection failed: " . $conn->connect_error);
+          }
+          $sql = "select Host, User from mysql.user;";
+          $result = $conn->query($sql);
+          while($row = $result->fetch_assoc()){
+                  echo($row["Host"] . " / " . $row["User"] . "<br />");
+          }
+          //var_dump($result);
+      ?>   
+    path: /var/www/html/db.php
+    permission: '0644'
+  - content: |
+      <?php
+
+      // Show all information, defaults to INFO_ALL
+      phpinfo();
+
+      ?>    
+    path: /var/www/html/info.php
+    permission: '0644'

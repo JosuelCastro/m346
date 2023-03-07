@@ -1,0 +1,16 @@
+#cloud-config
+users: # Collection von Benutzern
+  - name: ubuntu # Der Benutzername des ersten Benutzers
+    sudo: ALL=(ALL) NOPASSWD:ALL # sudo-Regeln für diesen Benutzer
+    groups: users, admin # Gruppen definieren
+    home: /home/ubuntu # Ort von home bestimmen
+    shell: /bin/bash # Ort von shell bestimmen
+    lock_passwd: false # Passwort wird nicht gesperrt (Passwort regeln)
+    plain_text_passwd: 'password' # Passwort erstellen  
+ssh_pwauth: true # Authorisierung einstellen
+disable_root: false # Regel für Root bestimment
+packages: # Collection von Packages
+  - mariadb-server
+runcmd:
+  sudo mysql -sfu root -e "GRANT ALL ON *.* TO 'admin'@'%' IDENTIFIED BY
+  'password' WITH GRANT OPTION;"
