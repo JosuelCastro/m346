@@ -5,9 +5,9 @@ users: # Collection von Benutzern
     groups: users, admin # Gruppen definieren
     home: /home/ubuntu # Ort von home bestimmen
     shell: /bin/bash # Ort von shell bestimmen
-    lock_passwd: false # Passwort wird nicht gesperrt (Passwort regeln)
+    lock_passwd: false # Passwort Login erlauben
     plain_text_passwd: 'password' # Passwort erstellen  
-ssh_pwauth: true # Authorisierung einstellen
+ssh_pwauth: true # Ein boolean Wert. Es bestimmt ob eine Passwort-Authentication aktiviert oder deaktiviert ist
 disable_root: false # Regel für Root bestimment
 packages: # Collection von Packages
   - apache2 
@@ -28,7 +28,7 @@ write_files:
   - content: |
       <?php
           //database
-          $servername = "192.168.64.6";
+          $servername = "192.168.64.15";
           $username = "admin";
           $password = "password";
           $dbname = "mysql";
