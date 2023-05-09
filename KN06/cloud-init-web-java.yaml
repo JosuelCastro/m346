@@ -18,7 +18,7 @@ write_files:
   - content: |
       [Unit]
       Description=Demo Shop
-      After=syslog.targeti
+      After=syslog.target
       [Service]
       WorkingDirectory=/var/www/app
       User=www-data
@@ -31,7 +31,7 @@ write_files:
   - content: |
       server {
         listen        80;
-        server_name   52.86.40.139;
+        server_name   44.201.68.138;
         location / {
           proxy_pass         http://127.0.0.1:5001;
           proxy_http_version 1.1;
@@ -48,7 +48,7 @@ runcmd:
   - sudo mkdir /var/www
   - sudo mkdir /var/www/app
   - sudo git clone https://gitlab.com/ch-tbz-it/Stud/m346/m346scripts.git
-  - sudo sed -i 's/<your-connection-string>/jdbc:mysql:\/\/172.31.0.26:3306\/shop/g' ./m346scripts/KN06/java/production.properties
+  - sudo sed -i 's/<your-connection-string>/jdbc:mysql:\/\/172.31.0.228:3306\/shop/g' ./m346scripts/KN06/java/production.properties
   - sudo cp -r ./m346scripts/KN06/java/* /var/www/app/
   - sudo systemctl enable shop-app.service
   - sudo systemctl start shop-app.service
