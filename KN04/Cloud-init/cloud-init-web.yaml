@@ -28,7 +28,7 @@ write_files:
   - content: |
       <?php
           //database
-          $servername = "18.206.14.9";
+          $servername = "3.235.222.179";
           $username = "admin";
           $password = "password";
           $dbname = "mysql";
